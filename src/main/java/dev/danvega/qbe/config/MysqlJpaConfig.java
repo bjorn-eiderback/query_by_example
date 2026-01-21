@@ -45,7 +45,7 @@ public class MysqlJpaConfig {
             @Qualifier("mysqlDataSource") DataSource dataSource,
             JpaProperties jpaProperties) {
         Map<String, Object> properties = new HashMap<>(jpaProperties.getProperties());
-        properties.putIfAbsent("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.hbm2ddl.auto", "update");
         properties.putIfAbsent("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         return builder
                 .dataSource(dataSource)
