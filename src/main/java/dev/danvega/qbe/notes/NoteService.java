@@ -1,19 +1,17 @@
 package dev.danvega.qbe.notes;
 
-import java.util.List;
 import java.time.LocalDateTime;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 @Transactional(transactionManager = "mysqlTransactionManager", readOnly = true)
 public class NoteService {
 
     private final NoteRepository noteRepository;
-
-    public NoteService(NoteRepository noteRepository) {
-        this.noteRepository = noteRepository;
-    }
 
     public List<Note> findAll() {
         return noteRepository.findAll();

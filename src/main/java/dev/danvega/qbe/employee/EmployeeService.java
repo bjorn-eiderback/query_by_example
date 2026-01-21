@@ -1,24 +1,21 @@
 package dev.danvega.qbe.employee;
 
+import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-
 import static org.springframework.data.domain.ExampleMatcher.*;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
 
     // Find all employees matching exact criteria
     public List<Employee> findEmployeesByExample(Employee employee) {

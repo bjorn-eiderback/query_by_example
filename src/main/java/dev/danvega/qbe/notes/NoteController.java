@@ -1,8 +1,9 @@
 package dev.danvega.qbe.notes;
 
-import java.util.List;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,13 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/notes")
+@RequiredArgsConstructor
 public class NoteController {
 
     private final NoteService noteService;
-
-    public NoteController(NoteService noteService) {
-        this.noteService = noteService;
-    }
 
     @GetMapping
     public ResponseEntity<List<Note>> findAll() {
@@ -40,7 +38,11 @@ public class NoteController {
 
     @PostMapping
     public ResponseEntity<Note> create(@Valid @RequestBody NoteCreateRequest request) {
-        Note note = new Note(request.getDateTime(), request.getText(), request.getStatus());
+        Note note = Note.builder()
+                .dateTime(request.getDateTime())
+                .text(request.getText())
+                .status(request.getStatus())
+                .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(noteService.create(note));
     }
 }

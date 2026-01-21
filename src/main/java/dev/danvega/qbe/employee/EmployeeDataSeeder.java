@@ -2,19 +2,17 @@ package dev.danvega.qbe.employee;
 
 import java.math.BigDecimal;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@RequiredArgsConstructor
 public class EmployeeDataSeeder implements ApplicationRunner {
 
     private final EmployeeRepository employeeRepository;
-
-    public EmployeeDataSeeder(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
 
     @Override
     @Transactional(transactionManager = "postgresTransactionManager")

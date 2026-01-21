@@ -2,15 +2,11 @@ package dev.danvega.qbe.employee;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import dev.danvega.qbe.DatabaseTestContainers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,12 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
 @SpringBootTest
-@Testcontainers
-class EmployeeRepositoryTest {
-
-    @Container
-    @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16-alpine"));
+class EmployeeRepositoryTest extends DatabaseTestContainers {
 
     @Autowired
     private EmployeeRepository employeeRepository;
