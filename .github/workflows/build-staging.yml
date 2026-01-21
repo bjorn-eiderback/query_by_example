@@ -16,6 +16,15 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
+      # Optional: inject config via GitHub Variables/Secrets for staging
+      # env:
+      #   SPRING_PROFILES_ACTIVE: staging
+      #   POSTGRES_URL: ${{ vars.POSTGRES_URL }}
+      #   POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      #   POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      #   MYSQL_URL: ${{ vars.MYSQL_URL }}
+      #   MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      #   MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
       - name: Build (skip tests)
         run: ./mvnw -B -DskipTests package
       # Optional: build a container image with Spring Boot Buildpacks (requires Docker on the runner)
