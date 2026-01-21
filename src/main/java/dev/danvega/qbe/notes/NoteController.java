@@ -39,9 +39,9 @@ public class NoteController {
     @PostMapping
     public ResponseEntity<Note> create(@Valid @RequestBody NoteCreateRequest request) {
         Note note = Note.builder()
-                .dateTime(request.getDateTime())
-                .text(request.getText())
-                .status(request.getStatus())
+                .dateTime(request.dateTime())
+                .text(request.text())
+                .status(request.status())
                 .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(noteService.create(note));
     }
