@@ -1,16 +1,6 @@
 spring:
   application:
     name: qbe
-  datasource:
-    url: jdbc:postgresql://localhost:5432/employees
-    username: user
-    password: password
-    driver-class-name: org.postgresql.Driver
-  second-datasource:
-    url: jdbc:mysql://localhost:3307/notes
-    username: user
-    password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
       mode: never
@@ -25,6 +15,8 @@ spring:
     level:
       org.hibernate.SQL: DEBUG
       org.testcontainers: INFO
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
 management:
   endpoints:
     web:

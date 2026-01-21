@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/employees}
+    username: ${POSTGRES_USER:user}
+    password: ${POSTGRES_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  second-datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3307/notes}
+    username: ${MYSQL_USER:user}
+    password: ${MYSQL_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver

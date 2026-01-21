@@ -146,6 +146,31 @@ class EmployeeRepositoryTest {
 }
 ```
 
+## Using environment variables for user names, passwords, and URLs
+This is a common setup. Spring Boot supports profiles and externalized config, so you can separate local/stage/prod and inject secrets via environment variables (including
+from GitHub Actions secrets).
+
+Typical approach:
+
+- Use application.yaml for defaults.
+- Add application-local.yaml, application-staging.yaml, application-prod.yaml.
+- Activate with SPRING_PROFILES_ACTIVE=local|staging|prod.
+- Reference secrets via env vars in YAML:
+  password: ${DB_PASSWORD}
+
+In GitHub Actions:
+
+- Store secrets in repo/environment secrets (e.g., DB_PASSWORD, DB_USER).
+- Export them in the workflow env: block.
+- Spring Boot reads them automatically.
+- 
+### Usage
+Usage:
+
+- Local (default): just run the app
+- Staging: SPRING_PROFILES_ACTIVE=staging POSTGRES_URL=... POSTGRES_USER=... POSTGRES_PASSWORD=... MYSQL_URL=... MYSQL_USER=... MYSQL_PASSWORD=...
+- Prod: same env vars with SPRING_PROFILES_ACTIVE=prod
+
 ## Learn More
 
 - [Spring Data JPA Documentation](https://docs.spring.io/spring-data/jpa/reference/repositories/query-by-example.html)
