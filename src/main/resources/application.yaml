@@ -25,3 +25,8 @@ spring:
     level:
       org.hibernate.SQL: DEBUG
       org.testcontainers: INFO
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
