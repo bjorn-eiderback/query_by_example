@@ -17,3 +17,17 @@ jobs:
           cache: maven
       - name: Build (skip tests)
         run: ./mvnw -B -DskipTests package
+      # Optional: build a container image with Spring Boot Buildpacks (requires Docker on the runner)
+      # - name: Build container image (buildpacks)
+      #   run: ./mvnw -B -DskipTests spring-boot:build-image
+      #
+      # Optional: build a container image with Jib (requires Docker on the runner for dockerBuild)
+      # - name: Build container image (Jib)
+      #   run: ./mvnw -B -DskipTests jib:dockerBuild
+      #
+      # Optional: upload the jar artifact for download from the workflow run
+      # - name: Upload jar
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: qbe-jar
+      #     path: target/*.jar
