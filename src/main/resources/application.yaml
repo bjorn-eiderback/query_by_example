@@ -1,9 +1,19 @@
 spring:
   application:
     name: qbe
+  datasource:
+    url: jdbc:postgresql://localhost:5432/employees
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  second-datasource:
+    url: jdbc:mysql://localhost:3307/notes
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
-      mode: always
+      mode: never
   jpa:
     show-sql: true
     properties:
@@ -11,7 +21,6 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: create-drop
-    defer-datasource-initialization: true
   logging:
     level:
       org.hibernate.SQL: DEBUG
