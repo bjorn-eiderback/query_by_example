@@ -27,6 +27,7 @@ import java.util.Map;
 )
 public class PostgresJpaConfig {
 
+    // Bind primary (default) datasource properties from spring.datasource.*.
     @Bean
     @Primary
     @ConfigurationProperties("spring.datasource")
@@ -34,6 +35,7 @@ public class PostgresJpaConfig {
         return new DataSourceProperties();
     }
 
+    // Build the primary DataSource; marked @Primary so autowiring defaults to Postgres.
     @Bean
     @Primary
     @ConfigurationProperties("spring.datasource.hikari")
@@ -42,6 +44,7 @@ public class PostgresJpaConfig {
         return properties.initializeDataSourceBuilder().build();
     }
 
+    // EntityManagerFactory for Postgres entities; tells JPA where to scan and which props to use.
     @Bean
     @Primary
     public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory(
@@ -59,6 +62,7 @@ public class PostgresJpaConfig {
                 .build();
     }
 
+    // Transaction manager for Postgres; @Primary makes it the default for @Transactional.
     @Bean
     @Primary
     public PlatformTransactionManager postgresTransactionManager(

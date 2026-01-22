@@ -26,12 +26,15 @@ import java.util.Map;
 )
 public class MysqlJpaConfig {
 
+    // Bind secondary datasource properties from spring.second-datasource.*.
+    // This prefix is custom (not a Spring Boot default) to keep the second DB config separate.
     @Bean
     @ConfigurationProperties("spring.second-datasource")
     public DataSourceProperties mysqlDataSourceProperties() {
         return new DataSourceProperties();
     }
 
+    // Build the secondary DataSource; not @Primary so it must be referenced explicitly.
     @Bean
     @ConfigurationProperties("spring.second-datasource.hikari")
     public DataSource mysqlDataSource(
@@ -39,6 +42,7 @@ public class MysqlJpaConfig {
         return properties.initializeDataSourceBuilder().build();
     }
 
+    // EntityManagerFactory for MySQL entities; scans notes package only.
     @Bean
     public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
@@ -55,6 +59,7 @@ public class MysqlJpaConfig {
                 .build();
     }
 
+    // Transaction manager for MySQL; must be referenced by name in @Transactional.
     @Bean
     public PlatformTransactionManager mysqlTransactionManager(
             @Qualifier("mysqlEntityManagerFactory") EntityManagerFactory entityManagerFactory) {

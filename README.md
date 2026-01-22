@@ -171,6 +171,58 @@ Usage:
 - Staging: SPRING_PROFILES_ACTIVE=staging POSTGRES_URL=... POSTGRES_USER=... POSTGRES_PASSWORD=... MYSQL_URL=... MYSQL_USER=... MYSQL_PASSWORD=...
 - Prod: same env vars with SPRING_PROFILES_ACTIVE=prod
 
+## Transactions
+
+### NoteService Transaction Management
+Here’s how NoteService works and what the @Transactional parameters do.
+
+NoteService (src/main/java/dev/danvega/qbe/notes/NoteService.java) exposes three operations:
+
+- findAll() → read‑only query
+- search(...) → read‑only query with filters
+- create(...) → write (insert)
+
+Transactional annotations:
+
+- Class level: @Transactional(transactionManager = "mysqlTransactionManager", readOnly = true)
+  - Uses the MySQL transaction manager, not Postgres.
+  - readOnly = true tells Spring/Hibernate these methods won’t write; it can optimize and prevents accidental writes in these methods.
+- Method level on create(...):
+  - @Transactional(transactionManager = "mysqlTransactionManager")
+  - Overrides the class default to allow writes (no readOnly=true) so inserts/updates can occur.
+
+Why this matters:
+
+- You have two databases, so you must tell Spring which transaction manager to use.
+- Reads default to MySQL and are read‑only.
+- Writes explicitly use MySQL and allow changes.
+
+### EmplyoyeeService Transaction Management
+EmployeeService already has @Transactional(readOnly = true) at the class level, but it doesn’t specify a transactionManager because the Postgres one is marked @Primary in
+PostgresJpaConfig. So Spring uses the primary transaction manager automatically.
+
+NoteService must specify transactionManager = "mysqlTransactionManager" because that’s not the primary one.
+
+So:
+
+- EmployeeService → defaults to primary (Postgres)
+- NoteService → explicitly targets MySQL
+
+### spring.second-datasource
+spring.second-datasource is not a Spring Boot standard. We invented that prefix so we could bind a second set of datasource properties without clashing with the default
+spring.datasource.
+
+Why it’s needed:
+
+- Spring Boot only auto-binds one datasource by default (spring.datasource.*).
+- For a second DB, you must choose your own prefix and bind it with @ConfigurationProperties.
+- We used spring.second-datasource.* to keep it clear and grouped.
+
+Where it’s used:
+
+- In MysqlJpaConfig, the @ConfigurationProperties("spring.second-datasource") annotation tells Spring to bind those YAML properties into DataSourceProperties.
+- Then we build the MySQL DataSource from that.
+
 ## Learn More
 
 - [Spring Data JPA Documentation](https://docs.spring.io/spring-data/jpa/reference/repositories/query-by-example.html)

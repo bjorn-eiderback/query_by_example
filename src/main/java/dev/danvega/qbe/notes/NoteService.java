@@ -18,6 +18,7 @@ public class NoteService {
     }
 
     public List<Note> search(String status, LocalDateTime from, LocalDateTime to) {
+        // Route to the most specific repository method based on which filters are present.
         if (status != null && from != null && to != null) {
             return noteRepository.findByStatusIgnoreCaseAndDateTimeBetween(status, from, to);
         }
@@ -32,6 +33,7 @@ public class NoteService {
 
     @Transactional(transactionManager = "mysqlTransactionManager")
     public Note create(Note note) {
+        // Override read-only at method level to allow writes.
         return noteRepository.save(note);
     }
 }

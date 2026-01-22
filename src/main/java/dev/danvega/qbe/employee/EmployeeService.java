@@ -45,6 +45,7 @@ public class EmployeeService {
                 .withMatcher("firstName", match -> match.exact()) // But make firstName exact match
                 .withMatcher("department", match -> match.contains()); // Department can be partial
 
+        // Pair the probe with the matcher to drive QBE query generation.
         Example<Employee> example = Example.of(employee, matcher);
         return employeeRepository.findAll(example);
     }
