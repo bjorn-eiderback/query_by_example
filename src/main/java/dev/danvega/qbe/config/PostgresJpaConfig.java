@@ -3,6 +3,8 @@ package dev.danvega.qbe.config;
 import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import dev.danvega.qbe.employee.Employee;
+import dev.danvega.qbe.employee.EmployeeRepository;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -21,7 +23,7 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "dev.danvega.qbe.employee",
+        basePackageClasses = EmployeeRepository.class,
         entityManagerFactoryRef = "postgresEntityManagerFactory",
         transactionManagerRef = "postgresTransactionManager"
 )
@@ -57,7 +59,7 @@ public class PostgresJpaConfig {
         properties.putIfAbsent("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         return builder
                 .dataSource(dataSource)
-                .packages("dev.danvega.qbe.employee")
+                .packages(Employee.class)
                 .persistenceUnit("postgres")
                 .properties(properties)
                 .build();

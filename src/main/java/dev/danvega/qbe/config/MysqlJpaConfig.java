@@ -3,6 +3,8 @@ package dev.danvega.qbe.config;
 import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import dev.danvega.qbe.notes.Note;
+import dev.danvega.qbe.notes.NoteRepository;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -20,7 +22,7 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "dev.danvega.qbe.notes",
+        basePackageClasses = NoteRepository.class,
         entityManagerFactoryRef = "mysqlEntityManagerFactory",
         transactionManagerRef = "mysqlTransactionManager"
 )
@@ -54,7 +56,7 @@ public class MysqlJpaConfig {
         properties.putIfAbsent("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         return builder
                 .dataSource(dataSource)
-                .packages("dev.danvega.qbe.notes")
+                .packages(Note.class)
                 .persistenceUnit("mysql")
                 .properties(properties)
                 .build();
