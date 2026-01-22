@@ -51,6 +51,7 @@ public class PostgresJpaConfig {
             EntityManagerFactoryBuilder builder,
             @Qualifier("postgresDataSource") DataSource dataSource,
             JpaProperties jpaProperties) {
+        // Qualifier pins this factory to the Postgres DataSource when multiple DataSources exist.
         Map<String, Object> properties = new HashMap<>(jpaProperties.getProperties());
         properties.putIfAbsent("hibernate.hbm2ddl.auto", "create-drop");
         properties.putIfAbsent("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");

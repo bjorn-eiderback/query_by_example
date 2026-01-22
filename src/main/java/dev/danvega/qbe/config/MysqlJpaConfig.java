@@ -48,6 +48,7 @@ public class MysqlJpaConfig {
             EntityManagerFactoryBuilder builder,
             @Qualifier("mysqlDataSource") DataSource dataSource,
             JpaProperties jpaProperties) {
+        // Qualifier is required to select the MySQL DataSource among multiple candidates.
         Map<String, Object> properties = new HashMap<>(jpaProperties.getProperties());
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.putIfAbsent("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
