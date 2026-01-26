@@ -1,4 +1,5 @@
 # Spring Data JPA Query By Example Demo
+-- Dan Vega's (https://danvega.dev) built out with notes and especially as an example of using two different data sources in parallel (PostgreSQL and MySQL) with Spring Boot.
 
 Transform your Spring Data JPA queries from complex boilerplate into elegant, type-safe search operations with [Query By Example](https://docs.spring.io/spring-data/jpa/reference/repositories/query-by-example.html). This project demonstrates how to implement dynamic, flexible queries without the overhead of writing multiple repository methods or complex JPQL statements.
 
